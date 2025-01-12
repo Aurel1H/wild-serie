@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import CategoryDeleteForm from "../components/CategoryDeleteForm";
+import CategoryDeleteForm from "../../components/Category/CategoryDeleteForm";
 
 type Category = {
   id: number;

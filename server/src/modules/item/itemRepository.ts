@@ -10,7 +10,6 @@ type Item = {
 
 class ItemRepository {
   // The C of CRUD - Create operation
-
   async create(item: Omit<Item, "id">) {
     // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await databaseClient.query<Result>(
@@ -22,8 +21,7 @@ class ItemRepository {
     return result.insertId;
   }
 
-  // The Rs of CRUD - Read operations
-
+  // The R of CRUD - Read operations
   async read(id: number) {
     // Execute the SQL SELECT query to retrieve a specific item by its ID
     const [rows] = await databaseClient.query<Rows>(
@@ -43,19 +41,29 @@ class ItemRepository {
     return rows as Item[];
   }
 
-  // The U of CRUD - Update operation
-  // TODO: Implement the update operation to modify an existing item
+  // The U of CRUD - Update operations
+  async update(item: Item) {
+    // Execute the SQL UPDATE query to update an existing item in the "item" table
+    const [result] = await databaseClient.query<Result>(
+      "update item set name = ? where id = ?",
+      [item.title, item.user_id, item.id],
+    );
 
-  // async update(item: Item) {
-  //   ...
-  // }
+    // Return how many rows were affected
+    return result.affectedRows;
+  }
 
-  // The D of CRUD - Delete operation
-  // TODO: Implement the delete operation to remove an item by its ID
+  // The D of CRUD - Delete operations
+  async delete(id: number) {
+    // Execute the SQL DELETE query to delete an existing item from the "item" table
+    const [result] = await databaseClient.query<Result>(
+      "delete from item where id = ?",
+      [id],
+    );
 
-  // async delete(id: number) {
-  //   ...
-  // }
+    // Return how many rows were affected
+    return result.affectedRows;
+  }
 }
 
 export default new ItemRepository();

@@ -10,11 +10,14 @@ import App from "./App";
 
 // Import additional components for new routes
 
-import CategoryDetail from "./pages/CategoryDetail";
-import CategoryEdit from "./pages/CategoryEdit";
-import CategoryIndex from "./pages/CategoryIndex";
-import CategoryNew from "./pages/CategoryNew";
-import ProgramIndex from "./pages/ProgramIndex";
+import CategoryDetail from "./pages/Category/CategoryDetail";
+import CategoryEdit from "./pages/Category/CategoryEdit";
+import CategoryIndex from "./pages/Category/CategoryIndex";
+import CategoryNew from "./pages/Category/CategoryNew";
+import ProgramDetail from "./pages/Program/ProgramDetail";
+import ProgramEdit from "./pages/Program/ProgramDetail";
+import ProgramIndex from "./pages/Program/ProgramIndex";
+import ProgramNew from "./pages/Program/ProgramNew";
 
 /* ************************************************************************* */
 
@@ -45,6 +48,18 @@ const router = createBrowserRouter([
         path: "/programs",
         element: <ProgramIndex />,
         loader: () => fetch(`${import.meta.env.VITE_API_URL}/api/programs`),
+      },
+      {
+        path: "/programs/new",
+        element: <ProgramNew />,
+      },
+      {
+        path: "/programs/:id",
+        element: <ProgramDetail />,
+      },
+      {
+        path: "/programs/:id/edit",
+        element: <ProgramEdit />,
       },
     ],
   },

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 type Program = {
   id: number;
@@ -17,12 +18,26 @@ function ProgramIndex() {
   }, []);
 
   return (
+    <>
+      <Link to={"/programs/new"}>Ajouter</Link>
+      <ul>
+        {programs.map((program) => (
+          <li key={program.id}>
+            <Link to={`/programs/${program.id}`}>{program.title}</Link>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
+/*return (
     <ul>
       {programs.map((program) => (
         <li key={program.id}>{program.title}</li>
       ))}
     </ul>
   );
-}
+}*/
 
 export default ProgramIndex;

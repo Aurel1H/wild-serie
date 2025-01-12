@@ -1,10 +1,7 @@
-// Import access to data
-
+import type { RequestHandler } from "express";
 import categoryRepository from "./categoryRepository";
 
 // Declare the actions
-
-import type { RequestHandler } from "express";
 
 const browse: RequestHandler = async (req, res, next) => {
   try {
@@ -96,4 +93,27 @@ const destroy: RequestHandler = async (req, res, next) => {
 
 // Export them to import them somewhere else
 
-export default { browse, read, edit, add, destroy };
+const validate: RequestHandler = (req, res, next) => {
+  type ValidationError = {
+    field: string;
+    message: string;
+  };
+
+  const errors: ValidationError[] = [];
+
+  const { name } = req.body;
+
+  // put your validation rules here
+
+  if (name == null) {
+    errors.push({ field: "name", message: "The field is required" });
+  }
+
+  if (errors.length === 0) {
+    next();
+  } else {
+    res.status(400).json({ validationErrors: errors });
+  }
+};
+
+export default { browse, read, edit, add, destroy, validate };
